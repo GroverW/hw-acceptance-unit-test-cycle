@@ -1,14 +1,5 @@
--#  This file is app/views/movies/index.html.haml
-%h2 All Movies
-
-= form_tag movies_path, :method => :get, :id => 'ratings_form' do
-  = hidden_field_tag "title_sort", true if @title_header
-  = hidden_field_tag ":release_date_sort", true if @date_header
-  Include:
-  - @all_ratings.each do |rating|
-    = rating
-    = check_box_tag "ratings[#{rating}]", 1, @selected_ratings.include?(rating), :id => "ratings_#{rating}"
-  = submit_tag 'Refresh', :id => 'ratings_submit', :class => 'btn btn-primary'
+-#  This file is app/views/movies/director.html.haml
+%h2= "Similar Movies to #{@movie.title}"
 
 %table#movies.table.table-striped.col-md-12
   %thead
@@ -19,7 +10,7 @@
       %th{:class => @date_header}= link_to 'Release Date', movies_path(:sort => 'release_date', :ratings => @selected_ratings), :id => 'release_date_header'
       %th More Info
   %tbody
-    - @movies.each do |movie|
+    - @similar_movies.each do |movie|
       %tr
         %td= movie.title
         %td= movie.director
